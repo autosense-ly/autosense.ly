@@ -1,0 +1,18 @@
+:root {
+  --bg-dark: #0b0d14;
+  --primary-blue: #4f7cff;
+  --secondary-blue: #315fe9;
+  --glass-card: rgba(255, 255, 255, 0.04);
+  --glass-card-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-white: #ffffff;
+  --text-secondary: #9ca3af;
+  --color-green: #22c55e;
+  --color-orange: #f59e0b;
+  --color-purple: #8b5cf6;
+  --color-danger: #ef4444;
+
+  --shadow-lux: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+  --blue-glow: 0 12px 32px -8px rgba(79, 124, 255, 0.45);
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}

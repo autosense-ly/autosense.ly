@@ -1,0 +1,56 @@
+@import url('./global.css');
+
+.report-box {
+  background: linear-gradient(135deg, rgba(79, 124, 255, 0.2), rgba(49, 95, 233, 0.05));
+  border: 1px solid rgba(79, 124, 255, 0.3);
+  border-radius: 24px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.report-label {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.report-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff !important;
+  margin: 8px 0;
+}
+
+.report-trend.positive {
+  font-size: 12px;
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.metric-title {
+  font-size: 12px;
+  color: #9ca3af;
+}

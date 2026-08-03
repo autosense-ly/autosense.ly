@@ -1,0 +1,16 @@
+{
+  "short_name": "CarWashPro",
+  "name": "CarWash Pro - Premium Management",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3003/3003984.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#0b0d14",
+  "theme_color": "#4f7cff",
+  "display": "standalone",
+  "orientation": "portrait"
+}

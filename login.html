@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Login - CarWash Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="login-content fade-up">
+            <div class="login-brand">
+                <div class="login-brand-icon">
+                    <i class="fa-solid fa-car-wash"></i>
+                </div>
+                <span style="font-weight: 800; font-size: 16px; letter-spacing: -0.3px;">CarWash Pro</span>
+            </div>
+
+            <div class="login-header">
+                <h2>Welcome Back 👋</h2>
+                <p>Sign in to access station control panel</p>
+            </div>
+
+            <form id="loginForm" class="glass-card-form">
+                <div class="input-group">
+                    <label class="input-label">Email or Username</label>
+                    <input type="text" id="username" class="input-field-lux" placeholder="admin@carwashpro.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <input type="password" id="password" class="input-field-lux" placeholder="••••••••" required>
+                </div>
+
+                <a href="#" class="forgot-pass">Forgot password?</a>
+
+                <button type="submit" class="login-btn">Sign In to Dashboard</button>
+            </form>
+        </div>
+    </div>
+    <script src="../js/storage.js"></script>
+    <script src="../js/router.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

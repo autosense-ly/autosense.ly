@@ -1,0 +1,81 @@
+@import url('./global.css');
+
+.search-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+}
+
+.customer-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(12px);
+}
+
+.customer-avatar {
+  width: 46px;
+  height: 46px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.customer-info h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff !important;
+}
+
+.customer-info p {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+.loyalty-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 6px;
+  padding: 3px 8px;
+  border-radius: 10px;
+}
+
+.loyalty-tag.vip {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.loyalty-tag.regular {
+  background: rgba(79, 124, 255, 0.15);
+  color: #4f7cff;
+}

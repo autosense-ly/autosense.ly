@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>CarWash Pro - Premium Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="app-viewport">
+        
+        <header class="app-header">
+            <div class="header-top">
+                <div class="user-greeting">
+                    <span class="greeting-sub" id="currentDate">SUN, AUG 2</span>
+                    <h1 class="greeting-main">Good Morning 👋</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn notification-btn" aria-label="Notifications">
+                        <i class="fa-regular fa-bell"></i>
+                        <span class="badge-dot"></span>
+                    </button>
+                    <a href="profile.html" class="profile-avatar">
+                        <svg class="avatar-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="50" fill="#315FE9"/>
+                            <circle cx="50" cy="38" r="20" fill="#FFFFFF"/>
+                            <path d="M 20 82 C 20 62, 35 55, 50 55 C 65 55, 80 62, 80 82 Z" fill="#FFFFFF"/>
+                        </svg>
+                        <span class="status-indicator"></span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="brand-bar">
+                <div class="brand-info">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-car-wash"></i>
+                    </div>
+                    <div>
+                        <div class="brand-title">CarWash Pro</div>
+                        <div class="brand-subtitle">Premium Management</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-divider"></div>
+        </header>
+
+        <main class="app-content">
+            
+            <section class="revenue-section fade-up">
+                <div class="revenue-card">
+                    <div class="shine-effect"></div>
+                    <div class="card-header-flex">
+                        <span class="revenue-label">Today's Revenue</span>
+                        <div class="growth-badge">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            <span>+12% vs yesterday</span>
+                        </div>
+                    </div>
+                    <div class="revenue-amount">₹18,450</div>
+                    <div class="revenue-footer">
+                        <span>Target: ₹25,000</span>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 73.8%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats-section fade-up delay-1">
+                <div class="stats-grid">
+                    <a href="vehicles.html" class="stat-card" style="text-decoration: none;">
+                        <div class="stat-icon-wrapper blue">
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <div class="stat-data">
+                            <div class="stat-value" data-target="42">42</div>
+                            <div class="stat-label">Cars Washed</div>
+                        </div>
+                    </a>
+
+                    <a href="vehicles.html" class="stat-card" style="text-decoration: none;">
+                        <div class="stat-icon-wrapper orange">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <div class="stat-data">
+                            <div class="stat-value" data-target="8">8</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                    </a>
+
+                    <a href="employees.html" class="stat-card" style="text-decoration: none;">
+                        <div class="stat-icon-wrapper purple">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="stat-data">
+                            <div class="stat-value" data-target="14">14</div>
+                            <div class="stat-label">Employees</div>
+                        </div>
+                    </a>
+
+                    <a href="reports.html" class="stat-card" style="text-decoration: none;">
+                        <div class="stat-icon-wrapper green">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div class="stat-data">
+                            <div class="stat-value" data-target="439">₹439</div>
+                            <div class="stat-label">Avg. Income</div>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <section class="quick-actions-section fade-up delay-2">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="actions-list">
+                    
+                    <a href="checkin.html" class="action-card" style="text-decoration: none;">
+                        <div class="action-left">
+                            <div class="action-icon blue">
+                                <i class="fa-solid fa-qrcode"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">Check In</span>
+                                <span class="action-subtitle">Scan or add new vehicle</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right action-arrow"></i>
+                    </a>
+
+                    <a href="payments.html" class="action-card" style="text-decoration: none;">
+                        <div class="action-left">
+                            <div class="action-icon green">
+                                <i class="fa-solid fa-credit-card"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">Payments</span>
+                                <span class="action-subtitle">Settle bills & issue receipts</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right action-arrow"></i>
+                    </a>
+
+                    <a href="customers.html" class="action-card" style="text-decoration: none;">
+                        <div class="action-left">
+                            <div class="action-icon purple">
+                                <i class="fa-solid fa-address-book"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">Customers</span>
+                                <span class="action-subtitle">CRM & loyalty profiles</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right action-arrow"></i>
+                    </a>
+
+                    <a href="reports.html" class="action-card" style="text-decoration: none;">
+                        <div class="action-left">
+                            <div class="action-icon orange">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <div class="action-text">
+                                <span class="action-title">Reports</span>
+                                <span class="action-subtitle">Analytics & performance</span>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right action-arrow"></i>
+                    </a>
+
+                </div>
+            </section>
+        </main>
+
+        <a href="checkin.html" class="fab-btn" aria-label="Quick Add Vehicle">
+            <i class="fa-solid fa-plus"></i>
+        </a>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="checkin.html" class="nav-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Check In</span>
+            </a>
+            <a href="customers.html" class="nav-item">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Customers</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Reports</span>
+            </a>
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
