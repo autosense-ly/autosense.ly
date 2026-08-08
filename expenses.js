@@ -73,6 +73,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadExpenses();
 
     async function loadExpenses() {
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 20px; font-size: 14px;">Loading...</p>';
         totalContainer.innerHTML = '';
 
@@ -89,12 +99,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         listContainer.innerHTML = expenses.map(exp => {
             const [y, m, d] = exp.expense_date.split('-').map(Number);
             const formattedDate = new Date(y, m - 1, d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const notesText = exp.notes ? ` • ${exp.notes}` : '';
+            const notesText = exp.notes ? ` • ${escapeHTML(exp.notes)}` : '';
 
             return `
                 <div class="expense-card">
                     <div>
-                        <h4 class="expense-name">${exp.name}</h4>
+                        <h4 class="expense-name">${escapeHTML(exp.name)}</h4>
                         <p class="expense-info">${formattedDate}${notesText}</p>
                     </div>
                     <span class="expense-amount">-${Number(exp.amount).toFixed(2)} LYD</span>

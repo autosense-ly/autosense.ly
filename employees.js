@@ -85,6 +85,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadEmployees();
 
     async function loadEmployees() {
+        function escapeHTML(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 20px; font-size: 14px;">Loading...</p>';
 
         const employees = await window.db.getEmployees();
@@ -102,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             return `
                 <div class="employee-card">
                     <div>
-                        <h4 class="employee-name">${emp.name}</h4>
+                        <h4 class="employee-name">${escapeHTML(emp.name)}</h4>
                         <p class="employee-pay-info">${payInfo}</p>
                     </div>
                     <span class="employee-pay-badge">${emp.pay_type}</span>

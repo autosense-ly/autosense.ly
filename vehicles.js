@@ -2,6 +2,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listContainer = document.getElementById('vehicleList');
     if (!listContainer) return;
 
+    function escapeHTML(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
     listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">Loading...</p>';
 
     const jobs = window.db ? await window.db.getJobs() : [];
@@ -27,11 +37,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `
             <div class="vehicle-card">
                 <div>
-                    <h4 class="vehicle-number">${job.plate_number || 'No plate'}</h4>
-                    <p class="vehicle-info">${serviceNames} • ${job.customer_name || 'Unknown'}</p>
+                    <h4 class="vehicle-number">${escapeHTML(job.plate_number) || 'No plate'}</h4>
+                    <p class="vehicle-info">${escapeHTML(serviceNames)} • ${escapeHTML(job.customer_name) || 'Unknown'}</p>
                     <span class="vehicle-time">Check In: ${checkInTime}</span>
                 </div>
-                <span class="${badgeClass}">${job.status || 'waiting'}</span>
+                <span class="${badgeClass}">${escapeHTML(job.status) || 'waiting'}</span>
             </div>
         `;
     }).join('');

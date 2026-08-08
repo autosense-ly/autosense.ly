@@ -1,0 +1,70 @@
+@import url('./global.css');
+@import url('./components.css');
+@import url('./animations.css');
+
+.payment-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+.payment-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.payment-plate {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ffffff !important;
+  letter-spacing: -0.3px;
+}
+
+.payment-info {
+  font-size: 12px;
+  color: #9ca3af !important;
+  margin-top: 4px;
+}
+
+.payment-amount {
+  font-size: 16px;
+  font-weight: 800;
+  color: #22c55e !important;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.payment-method-select {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pay-btn {
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.pay-btn:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+}
