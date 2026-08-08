@@ -84,6 +84,24 @@ window.db = {
         return data;
     },
 
+    async getAllServices() {
+        const { data, error } = await _client.from('services').select('*').order('created_at', { ascending: false });
+        if (error) { console.error('getAllServices error:', error); return []; }
+        return data;
+    },
+
+    async createService(service) {
+        const { data, error } = await _client.from('services').insert(service).select().single();
+        if (error) { console.error('createService error:', error); return null; }
+        return data;
+    },
+
+    async updateService(id, updates) {
+        const { data, error } = await _client.from('services').update(updates).eq('id', id).select().single();
+        if (error) { console.error('updateService error:', error); return null; }
+        return data;
+    },
+
     // ============================================
     // EMPLOYEES (owner-only, enforced by RLS)
     // ============================================
