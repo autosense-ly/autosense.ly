@@ -1,0 +1,55 @@
+@import url('./global.css');
+@import url('./components.css');
+@import url('./animations.css');
+
+.expense-form-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(12px);
+}
+
+.expense-total-card {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ef4444 !important;
+  text-align: center;
+}
+
+.expense-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(12px);
+}
+
+.expense-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff !important;
+  letter-spacing: -0.3px;
+}
+
+.expense-info {
+  font-size: 12px;
+  color: #9ca3af !important;
+  margin-top: 4px;
+}
+
+.expense-amount {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ef4444 !important;
+}
