@@ -121,5 +121,68 @@ window.db = {
         const { data, error } = await _client.from('payments').insert(payment).select().single();
         if (error) { console.error('addPayment error:', error); return null; }
         return data;
+    },
+
+    // ============================================
+    // DASHBOARD STATS
+    // ============================================
+    async getDashboardStats() {
+        const profile = await this.getCurrentProfile();
+        if (!profile) return { revenue: 0, carsWashed: 0, pending: 0, employees: 0, avgIncome: 0 };
+
+        const startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+
+        // All jobs for this business
+        const { data: jobs, error: jobsError } = await _client
+            .from('jobs')
+            .select('id, status, created_at')
+            .eq('business_id', profile.business_id);
+
+        if (jobsError) { console.error('getDashboardStats jobs error:', jobsError); }
+        const allJobs = jobs || [];
+
+        const doneStatuses = ['completed', 'delivered'];
+
+        const carsWashedToday = allJobs.filter(j =>
+            doneStatuses.includes(j.status) && new Date(j.created_at) >= startOfToday
+        ).length;
+
+        const pending = allJobs.filter(j => !doneStatuses.includes(j.status)).length;
+
+        // Today's paid payments for this business's jobs
+        const jobIds = allJobs.map(j => j.id);
+        let revenue = 0;
+        if (jobIds.length > 0) {
+            const { data: payments, error: paymentsError } = await _client
+                .from('payments')
+                .select('amount, paid, paid_at, job_id')
+                .in('job_id', jobIds)
+                .eq('paid', true);
+
+            if (paymentsError) { console.error('getDashboardStats payments error:', paymentsError); }
+            const todaysPayments = (payments || []).filter(p =>
+                p.paid_at && new Date(p.paid_at) >= startOfToday
+            );
+            revenue = todaysPayments.reduce((sum, p) => sum + Number(p.amount), 0);
+        }
+
+        const avgIncome = carsWashedToday > 0 ? revenue / carsWashedToday : 0;
+
+        // Employee count (owner only — RLS enforces this automatically)
+        const { data: employees, error: empError } = await _client
+            .from('employees')
+            .select('id')
+            .eq('business_id', profile.business_id);
+
+        if (empError) { console.error('getDashboardStats employees error:', empError); }
+
+        return {
+            revenue,
+            carsWashed: carsWashedToday,
+            pending,
+            employees: (employees || []).length,
+            avgIncome
+        };
     }
 };

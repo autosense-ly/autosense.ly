@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/checkin.css">
+    <link rel="stylesheet" href="checkin.css">
 </head>
 <body>
     <div class="page-container">
@@ -21,26 +21,28 @@
             <form id="checkinForm">
                 <div class="input-group">
                     <label class="input-label">Vehicle Registration Number</label>
-                    <input type="text" id="vNumber" class="input-field" placeholder="e.g. MH 02 CD 4567" required>
+                    <input type="text" id="vNumber" class="input-field" placeholder="e.g. 123 ABC" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Car Model</label>
+                    <input type="text" id="vModel" class="input-field" placeholder="e.g. Toyota Corolla" required>
                 </div>
 
                 <div class="input-group">
                     <label class="input-label">Customer Name</label>
-                    <input type="text" id="vOwner" class="input-field" placeholder="e.g. Rahul Sharma" required>
+                    <input type="text" id="vOwner" class="input-field" placeholder="e.g. Ahmed Ali">
                 </div>
 
                 <div class="input-group">
                     <label class="input-label">Phone Number</label>
-                    <input type="tel" id="vPhone" class="input-field" placeholder="+91 9876543210">
+                    <input type="tel" id="vPhone" class="input-field" placeholder="+218 91 234 5678">
                 </div>
 
                 <div class="input-group">
                     <label class="input-label">Select Service</label>
                     <select id="vService" class="input-field">
-                        <option value="Super Foam Wash">Super Foam Wash - ₹850</option>
-                        <option value="Interior Deep Cleaning">Interior Deep Cleaning - ₹1,200</option>
-                        <option value="Full Ceramic Coating">Full Ceramic Coating - ₹4,500</option>
-                        <option value="Engine Bay Detail">Engine Bay Detail - ₹650</option>
+                        <option value="">Loading services...</option>
                     </select>
                 </div>
 
@@ -50,7 +52,8 @@
             </form>
         </div>
     </div>
-    <script src="../js/storage.js"></script>
-    <script src="../js/checkin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="storage.js"></script>
+    <script src="checkin.js"></script>
 </body>
 </html>

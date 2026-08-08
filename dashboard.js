@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     initDateDisplay();
-    initCounterAnimations();
+    await loadDashboardStats();
 });
 
 function initDateDisplay() {
@@ -12,33 +12,19 @@ function initDateDisplay() {
     dateElement.textContent = now.toLocaleDateString('en-US', options).toUpperCase();
 }
 
-function initCounterAnimations() {
-    const statValues = document.querySelectorAll('.stat-value');
+async function loadDashboardStats() {
+    if (!window.db) return;
 
-    statValues.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-target'), 10);
-        if (isNaN(target)) return;
+    const stats = await window.db.getDashboardStats();
 
-        const isCurrency = counter.textContent.includes('₹');
-        const duration = 1000; 
-        const frameRate = 1000 / 60;
-        const totalFrames = Math.round(duration / frameRate);
-        let frame = 0;
+    setText('revenueAmount', `${stats.revenue.toFixed(2)} LYD`);
+    setText('statCarsWashed', stats.carsWashed);
+    setText('statPending', stats.pending);
+    setText('statEmployees', stats.employees);
+    setText('statAvgIncome', `${stats.avgIncome.toFixed(2)} LYD`);
+}
 
-        const timer = setInterval(() => {
-            frame++;
-            const progress = frame / totalFrames;
-            const currentCount = Math.round(target * (1 - Math.pow(1 - progress, 3)));
-
-            if (isCurrency) {
-                counter.textContent = `₹${currentCount.toLocaleString('en-IN')}`;
-            } else {
-                counter.textContent = currentCount;
-            }
-
-            if (frame === totalFrames) {
-                clearInterval(timer);
-            }
-        }, frameRate);
-    });
+function setText(id, text) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
 }
