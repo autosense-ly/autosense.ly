@@ -50,6 +50,18 @@ window.db = {
         return profile || null;
     },
 
+    async getBusiness(businessId) {
+        const { data, error } = await _client.from('businesses').select('*').eq('id', businessId).single();
+        if (error) { console.error('getBusiness error:', error); return null; }
+        return data;
+    },
+
+    async updateBusiness(businessId, updates) {
+        const { data, error } = await _client.from('businesses').update(updates).eq('id', businessId).select().single();
+        if (error) { console.error('updateBusiness error:', error); return null; }
+        return data;
+    },
+
     // ============================================
     // JOBS (replaces the old flat "vehicles" list)
     // ============================================
