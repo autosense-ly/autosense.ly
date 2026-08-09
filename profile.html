@@ -3,47 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Profile & Settings - CarWash Pro</title>
+    <title>Profile - CarWash Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
     <div class="page-container">
         <div class="page-header">
             <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-            <h2 class="page-title">Station Control</h2>
+            <h2 class="page-title">Profile</h2>
         </div>
 
         <div class="profile-card fade-up">
             <div class="profile-avatar-xl">
                 <i class="fa-solid fa-user-gear"></i>
             </div>
-            <h3 class="profile-name">Alex Morgan</h3>
-            <p class="profile-role">Station Admin Manager</p>
+            <h3 class="profile-name" id="profileName">Loading...</h3>
+            <p class="profile-role" id="profileRole"></p>
 
-            <div class="menu-group">
-                <a href="employees.html" class="menu-item">
-                    <span><i class="fa-solid fa-users"></i> Manage Employees</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </a>
-                <a href="services.html" class="menu-item">
-                    <span><i class="fa-solid fa-list-check"></i> Wash Services Catalog</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </a>
-                <a href="settings.html" class="menu-item">
-                    <span><i class="fa-solid fa-sliders"></i> System Settings</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </a>
-            </div>
+            <div class="menu-group" id="menuGroup"></div>
 
-            <a href="login.html" class="logout-btn">
+            <a href="#" id="logoutBtn" class="logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i> Logout
             </a>
         </div>
     </div>
-    <script src="../js/profile.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="storage.js"></script>
+    <script src="profile.js"></script>
 </body>
 </html>
