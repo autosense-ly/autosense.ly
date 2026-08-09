@@ -33,7 +33,7 @@
 .login-header h2 {
   font-size: 28px;
   font-weight: 800;
-  color: #ffffff;
+  color: var(--text-white);
   letter-spacing: -0.6px;
 }
 
@@ -45,21 +45,20 @@
 }
 
 .glass-card-form {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 28px;
   padding: 24px 20px;
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lux);
 }
 
 .input-field-lux {
   width: 100%;
   padding: 16px 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-card-hover);
+  border: 1px solid var(--glass-border);
   border-radius: 16px;
-  color: #ffffff;
+  color: var(--text-white);
   font-size: 14px;
   font-family: var(--font-main);
   outline: none;
@@ -68,8 +67,8 @@
 
 .input-field-lux:focus {
   border-color: var(--primary-blue);
-  background: rgba(79, 124, 255, 0.08);
-  box-shadow: 0 0 16px rgba(79, 124, 255, 0.25);
+  background: rgba(59, 91, 255, 0.06);
+  box-shadow: 0 0 16px rgba(59, 91, 255, 0.15);
 }
 
 .forgot-pass {

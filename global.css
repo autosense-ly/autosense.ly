@@ -1,6 +1,6 @@
 @import url('./variables.css');
 
-/* CSS Reset & Dark Mode Lock */
+/* CSS Reset & Light Mode */
 * {
   margin: 0;
   padding: 0;
@@ -9,8 +9,8 @@
 }
 
 body {
-  background-color: var(--bg-dark, #0b0d14);
-  color: #ffffff !important;
+  background-color: var(--bg-dark, #F5F7FF);
+  color: var(--text-white, #14162B) !important;
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   min-height: 100vh;
   display: flex;
@@ -20,9 +20,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Force All Headings to be White & Clean */
+/* Force All Headings to be Dark & Clean */
 h1, h2, h3, h4, h5, h6 {
-  color: #ffffff !important;
+  color: var(--text-white, #14162B) !important;
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-weight: 800;
   letter-spacing: -0.4px;
@@ -33,9 +33,7 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 430px;
   height: 100vh;
   max-height: 932px;
-  background: rgba(11, 13, 20, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #FFFFFF;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -51,12 +49,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-card-hover, #F0F2FF);
+  border: 1px solid var(--glass-border, rgba(20, 22, 43, 0.08));
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  color: #ffffff !important;
+  color: var(--text-white, #14162B) !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,12 +65,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .back-btn:active {
   transform: scale(0.92);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-border, rgba(20, 22, 43, 0.08));
 }
 
 .page-title {
   font-size: 22px;
   font-weight: 800;
-  color: #ffffff !important;
+  color: var(--text-white, #14162B) !important;
   letter-spacing: -0.5px;
 }

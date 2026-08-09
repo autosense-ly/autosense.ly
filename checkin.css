@@ -3,15 +3,14 @@
 @import url('./animations.css');
 
 .checkin-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 28px;
   padding: 24px 20px;
-  backdrop-filter: blur(16px);
   box-shadow: var(--shadow-lux);
 }
 
 select.input-field option {
-  background: #141824;
-  color: #ffffff;
+  background: #FFFFFF;
+  color: var(--text-white);
 }
