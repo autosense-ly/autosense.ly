@@ -202,5 +202,78 @@ window.db = {
             employees: (employees || []).length,
             avgIncome
         };
+    },
+
+    // ============================================
+    // MONTHLY REPORT (Revenue - Expenses - Employee Payments = Net Profit)
+    // ============================================
+    async getMonthlyReport() {
+        const profile = await this.getCurrentProfile();
+        if (!profile) return { revenue: 0, totalWashes: 0, totalExpenses: 0, employeePayments: 0, netProfit: 0 };
+
+        const now = new Date();
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+        const { data: jobs, error: jobsError } = await _client
+            .from('jobs')
+            .select('id, status, total_price, assigned_employee_id, created_at')
+            .eq('business_id', profile.business_id);
+        if (jobsError) { console.error('getMonthlyReport jobs error:', jobsError); }
+        const allJobs = jobs || [];
+
+        const doneStatuses = ['completed', 'delivered'];
+        const monthJobs = allJobs.filter(j => new Date(j.created_at) >= startOfMonth);
+        const totalWashes = monthJobs.filter(j => doneStatuses.includes(j.status)).length;
+
+        // Revenue: payments actually collected this month (by paid_at, not job creation date)
+        const jobIds = allJobs.map(j => j.id);
+        let revenue = 0;
+        if (jobIds.length > 0) {
+            const { data: payments, error: paymentsError } = await _client
+                .from('payments')
+                .select('amount, paid, paid_at, job_id')
+                .in('job_id', jobIds)
+                .eq('paid', true);
+            if (paymentsError) { console.error('getMonthlyReport payments error:', paymentsError); }
+            const monthPayments = (payments || []).filter(p => p.paid_at && new Date(p.paid_at) >= startOfMonth);
+            revenue = monthPayments.reduce((sum, p) => sum + Number(p.amount), 0);
+        }
+
+        // Expenses this month (timezone-safe date parsing)
+        const { data: expenses, error: expensesError } = await _client
+            .from('expenses')
+            .select('amount, expense_date')
+            .eq('business_id', profile.business_id);
+        if (expensesError) { console.error('getMonthlyReport expenses error:', expensesError); }
+        const totalExpenses = (expenses || []).filter(e => {
+            const [y, m, d] = e.expense_date.split('-').map(Number);
+            return new Date(y, m - 1, d) >= startOfMonth;
+        }).reduce((sum, e) => sum + Number(e.amount), 0);
+
+        // Employee payments this month (salary employees estimated monthly, percentage employees from their completed jobs)
+        const { data: employees, error: empError } = await _client
+            .from('employees')
+            .select('id, pay_type, salary_amount, salary_frequency, percentage_rate')
+            .eq('business_id', profile.business_id);
+        if (empError) { console.error('getMonthlyReport employees error:', empError); }
+
+        let employeePayments = 0;
+        (employees || []).forEach(emp => {
+            if (emp.pay_type === 'salary') {
+                const amt = Number(emp.salary_amount) || 0;
+                if (emp.salary_frequency === 'monthly') employeePayments += amt;
+                else if (emp.salary_frequency === 'weekly') employeePayments += amt * 4.33;
+                else if (emp.salary_frequency === 'daily') employeePayments += amt * 30;
+            } else if (emp.pay_type === 'percentage') {
+                const rate = Number(emp.percentage_rate) || 0;
+                const theirJobs = monthJobs.filter(j => j.assigned_employee_id === emp.id && doneStatuses.includes(j.status));
+                const theirRevenue = theirJobs.reduce((sum, j) => sum + Number(j.total_price), 0);
+                employeePayments += theirRevenue * (rate / 100);
+            }
+        });
+
+        const netProfit = revenue - totalExpenses - employeePayments;
+
+        return { revenue, totalWashes, totalExpenses, employeePayments, netProfit };
     }
 };

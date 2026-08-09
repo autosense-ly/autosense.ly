@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/reports.css">
+    <link rel="stylesheet" href="reports.css">
 </head>
 <body>
     <div class="page-container">
@@ -20,22 +20,33 @@
         <div class="report-metrics fade-up">
             <div class="report-box">
                 <span class="report-label">Monthly Gross Revenue</span>
-                <h3 class="report-value">₹5,42,000</h3>
-                <span class="report-trend positive">+18% vs last month</span>
+                <h3 class="report-value" id="reportRevenue">0.00 LYD</h3>
+                <span class="report-trend positive" id="reportNetProfit">Net Profit: 0.00 LYD</span>
             </div>
 
             <div class="report-grid">
                 <div class="metric-card">
-                    <span class="metric-num">284</span>
+                    <span class="metric-num" id="reportWashes">0</span>
                     <span class="metric-title">Total Washes</span>
                 </div>
                 <div class="metric-card">
-                    <span class="metric-num">4.9 ★</span>
-                    <span class="metric-title">Avg Rating</span>
+                    <span class="metric-num" id="reportExpenses">0.00</span>
+                    <span class="metric-title">Expenses (LYD)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-num" id="reportEmployeePay">0.00</span>
+                    <span class="metric-title">Employee Pay (LYD)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-num" id="reportNetProfitCard">0.00</span>
+                    <span class="metric-title">Net Profit (LYD)</span>
                 </div>
             </div>
         </div>
     </div>
-    <script src="../js/reports.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="storage.js"></script>
+    <script src="reports.js"></script>
 </body>
 </html>
