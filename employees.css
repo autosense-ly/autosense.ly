@@ -3,36 +3,36 @@
 @import url('./animations.css');
 
 .employee-form-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 18px;
   margin-bottom: 16px;
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lux);
 }
 
 .employee-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 16px 18px;
   margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lux);
 }
 
 .employee-name {
   font-size: 16px;
   font-weight: 800;
-  color: #ffffff !important;
+  color: var(--text-white) !important;
   letter-spacing: -0.3px;
 }
 
 .employee-pay-info {
   font-size: 12px;
-  color: #9ca3af !important;
+  color: var(--text-secondary) !important;
   margin-top: 4px;
 }
 
@@ -42,7 +42,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2px;
-  background: rgba(79, 124, 255, 0.15);
-  color: #4f7cff !important;
-  border: 1px solid rgba(79, 124, 255, 0.3);
+  background: rgba(59, 91, 255, 0.1);
+  color: var(--primary-blue) !important;
+  border: 1px solid rgba(59, 91, 255, 0.25);
 }
