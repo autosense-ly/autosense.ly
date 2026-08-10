@@ -3,19 +3,19 @@
 @import url('./animations.css');
 
 .settings-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 18px;
   margin-bottom: 16px;
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lux);
 }
 
 .signout-btn {
   width: 100%;
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+  color: var(--color-danger);
   padding: 14px;
   border-radius: 16px;
   font-weight: 700;
