@@ -3,11 +3,12 @@
 @import url('./animations.css');
 
 .payment-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 16px 18px;
   margin-bottom: 12px;
+  box-shadow: var(--shadow-lux);
 }
 
 .payment-top-row {
@@ -20,20 +21,20 @@
 .payment-plate {
   font-size: 15px;
   font-weight: 800;
-  color: #ffffff !important;
+  color: var(--text-white) !important;
   letter-spacing: -0.3px;
 }
 
 .payment-info {
   font-size: 12px;
-  color: #9ca3af !important;
+  color: var(--text-secondary) !important;
   margin-top: 4px;
 }
 
 .payment-amount {
   font-size: 16px;
   font-weight: 800;
-  color: #22c55e !important;
+  color: var(--color-green) !important;
 }
 
 .payment-actions {
@@ -43,17 +44,17 @@
 
 .payment-method-select {
   flex: 1;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-card-hover);
+  border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 10px 12px;
-  color: #ffffff;
+  color: var(--text-white);
   font-size: 13px;
   font-weight: 600;
 }
 
 .pay-btn {
-  background: #22c55e;
+  background: var(--color-green);
   color: #fff;
   border: none;
   padding: 10px 18px;
@@ -65,6 +66,6 @@
 }
 
 .pay-btn:disabled {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-border);
   cursor: not-allowed;
 }
