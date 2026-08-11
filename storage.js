@@ -82,6 +82,11 @@ window.db = {
     },
 
     async updateJob(id, updates) {
+        // Stamp completed_at the moment a job first becomes "completed".
+        // Later moving to "delivered" won't overwrite the original completion time.
+        if (updates.status === 'completed' && !updates.completed_at) {
+            updates = { ...updates, completed_at: new Date().toISOString() };
+        }
         const { data, error } = await _client.from('jobs').update(updates).eq('id', id).select().single();
         if (error) { console.error('updateJob error:', error); return null; }
         return data;
@@ -166,7 +171,7 @@ window.db = {
         // All jobs for this business
         const { data: jobs, error: jobsError } = await _client
             .from('jobs')
-            .select('id, status, created_at')
+            .select('id, status, created_at, completed_at')
             .eq('business_id', profile.business_id);
 
         if (jobsError) { console.error('getDashboardStats jobs error:', jobsError); }
@@ -174,8 +179,9 @@ window.db = {
 
         const doneStatuses = ['completed', 'delivered'];
 
+        // "Washed today" = actually finished today, not checked in today
         const carsWashedToday = allJobs.filter(j =>
-            doneStatuses.includes(j.status) && new Date(j.created_at) >= startOfToday
+            doneStatuses.includes(j.status) && j.completed_at && new Date(j.completed_at) >= startOfToday
         ).length;
 
         const pending = allJobs.filter(j => !doneStatuses.includes(j.status)).length;
@@ -228,14 +234,17 @@ window.db = {
 
         const { data: jobs, error: jobsError } = await _client
             .from('jobs')
-            .select('id, status, total_price, assigned_employee_id, created_at')
+            .select('id, status, total_price, assigned_employee_id, created_at, completed_at')
             .eq('business_id', profile.business_id);
         if (jobsError) { console.error('getMonthlyReport jobs error:', jobsError); }
         const allJobs = jobs || [];
 
         const doneStatuses = ['completed', 'delivered'];
-        const monthJobs = allJobs.filter(j => new Date(j.created_at) >= startOfMonth);
-        const totalWashes = monthJobs.filter(j => doneStatuses.includes(j.status)).length;
+        // "Washed this month" = actually finished this month, not checked in this month
+        const monthJobs = allJobs.filter(j =>
+            doneStatuses.includes(j.status) && j.completed_at && new Date(j.completed_at) >= startOfMonth
+        );
+        const totalWashes = monthJobs.length;
 
         // Revenue: payments actually collected this month (by paid_at, not job creation date)
         const jobIds = allJobs.map(j => j.id);
@@ -278,7 +287,7 @@ window.db = {
                 else if (emp.salary_frequency === 'daily') employeePayments += amt * 30;
             } else if (emp.pay_type === 'percentage') {
                 const rate = Number(emp.percentage_rate) || 0;
-                const theirJobs = monthJobs.filter(j => j.assigned_employee_id === emp.id && doneStatuses.includes(j.status));
+                const theirJobs = monthJobs.filter(j => j.assigned_employee_id === emp.id);
                 const theirRevenue = theirJobs.reduce((sum, j) => sum + Number(j.total_price), 0);
                 employeePayments += theirRevenue * (rate / 100);
             }

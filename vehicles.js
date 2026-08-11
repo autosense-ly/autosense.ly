@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listContainer = document.getElementById('vehicleList');
     if (!listContainer) return;
 
+    const STATUS_SEQUENCE = ['waiting', 'washing', 'drying', 'completed', 'delivered'];
+
     function escapeHTML(str) {
         if (str === null || str === undefined) return '';
         return String(str)
@@ -12,37 +14,85 @@ document.addEventListener('DOMContentLoaded', async () => {
             .replace(/'/g, '&#039;');
     }
 
-    listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">Loading...</p>';
-
-    const jobs = window.db ? await window.db.getJobs() : [];
-
-    if (jobs.length === 0) {
-        listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">No active vehicles in queue.</p>';
-        return;
+    function nextStatus(current) {
+        const idx = STATUS_SEQUENCE.indexOf((current || '').toLowerCase());
+        if (idx === -1 || idx === STATUS_SEQUENCE.length - 1) return null;
+        return STATUS_SEQUENCE[idx + 1];
     }
 
-    listContainer.innerHTML = jobs.map(job => {
-        const isPending = job.status && job.status.toLowerCase() === 'waiting';
-        const badgeClass = isPending ? 'status-badge pending' : 'status-badge in-progress';
+    function badgeClassFor(status) {
+        switch ((status || '').toLowerCase()) {
+            case 'waiting': return 'status-badge pending';
+            case 'completed':
+            case 'delivered': return 'status-badge in-progress';
+            default: return 'status-badge in-progress';
+        }
+    }
 
-        const checkInTime = job.created_at
-            ? new Date(job.created_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-            : '';
+    await loadJobs();
 
-        const serviceNames = (job.job_services || [])
-            .map(js => js.services ? js.services.name : '')
-            .filter(Boolean)
-            .join(', ') || 'No service selected';
+    async function loadJobs() {
+        listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">Loading...</p>';
 
-        return `
-            <div class="vehicle-card">
-                <div>
-                    <h4 class="vehicle-number">${escapeHTML(job.plate_number) || 'No plate'}</h4>
-                    <p class="vehicle-info">${escapeHTML(serviceNames)} • ${escapeHTML(job.customer_name) || 'Unknown'}</p>
-                    <span class="vehicle-time">Check In: ${checkInTime}</span>
+        const jobs = window.db ? await window.db.getJobs() : [];
+
+        if (jobs.length === 0) {
+            listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">No active vehicles in queue.</p>';
+            return;
+        }
+
+        listContainer.innerHTML = jobs.map(job => {
+            const checkInTime = job.created_at
+                ? new Date(job.created_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+                : '';
+
+            const serviceNames = (job.job_services || [])
+                .map(js => js.services ? js.services.name : '')
+                .filter(Boolean)
+                .join(', ') || 'No service selected';
+
+            const upcoming = nextStatus(job.status);
+            const advanceButton = upcoming
+                ? `<button class="status-advance-btn" data-job-id="${job.id}" data-next-status="${upcoming}">Mark as ${upcoming}</button>`
+                : '';
+
+            return `
+                <div class="vehicle-card" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 class="vehicle-number">${escapeHTML(job.plate_number) || 'No plate'}</h4>
+                            <p class="vehicle-info">${escapeHTML(serviceNames)} • ${escapeHTML(job.customer_name) || 'Unknown'}</p>
+                            <span class="vehicle-time">Check In: ${checkInTime}</span>
+                        </div>
+                        <span class="${badgeClassFor(job.status)}">${escapeHTML(job.status) || 'waiting'}</span>
+                    </div>
+                    ${advanceButton}
                 </div>
-                <span class="${badgeClass}">${escapeHTML(job.status) || 'waiting'}</span>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('');
+
+        document.querySelectorAll('.status-advance-btn').forEach(btn => {
+            btn.addEventListener('click', handleAdvance);
+        });
+    }
+
+    async function handleAdvance(e) {
+        const btn = e.currentTarget;
+        const jobId = btn.dataset.jobId;
+        const newStatus = btn.dataset.nextStatus;
+
+        btn.disabled = true;
+        btn.textContent = 'Updating...';
+
+        const result = await window.db.updateJob(jobId, { status: newStatus });
+
+        if (!result) {
+            alert('Something went wrong updating the status. Please try again.');
+            btn.disabled = false;
+            btn.textContent = `Mark as ${newStatus}`;
+            return;
+        }
+
+        await loadJobs();
+    }
 });
