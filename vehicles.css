@@ -81,3 +81,29 @@
   opacity: 0.6;
   cursor: default;
 }
+
+.add-car-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-blue);
+  color: #FFFFFF !important;
+  border: none;
+  border-radius: 20px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.add-car-btn:active {
+  background: var(--secondary-blue);
+  transform: scale(0.96);
+}
+
+.add-car-btn i {
+  font-size: 12px;
+}
