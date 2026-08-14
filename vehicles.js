@@ -2,7 +2,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const listContainer = document.getElementById('vehicleList');
     if (!listContainer) return;
 
+    const searchInput = document.getElementById('searchInput');
+    const filterPills = document.querySelectorAll('.filter-pill');
+
     const STATUS_SEQUENCE = ['waiting', 'washing', 'drying', 'completed', 'delivered'];
+
+    let allJobs = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
 
     function escapeHTML(str) {
         if (str === null || str === undefined) return '';
@@ -29,19 +36,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    await loadJobs();
+    function matchesFilter(job, filter) {
+        const status = (job.status || '').toLowerCase();
+        if (filter === 'all') return true;
+        return status === filter;
+    }
 
-    async function loadJobs() {
-        listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">Loading...</p>';
+    function matchesSearch(job, query) {
+        if (!query) return true;
+        const q = query.toLowerCase();
+        const plate = (job.plate_number || '').toLowerCase();
+        const name = (job.customer_name || '').toLowerCase();
+        return plate.includes(q) || name.includes(q);
+    }
 
-        const jobs = window.db ? await window.db.getJobs() : [];
+    function updateCounts() {
+        const counts = { all: allJobs.length, waiting: 0, washing: 0, drying: 0, completed: 0, delivered: 0 };
+        allJobs.forEach(j => {
+            const status = (j.status || '').toLowerCase();
+            if (counts.hasOwnProperty(status)) counts[status]++;
+        });
 
-        if (jobs.length === 0) {
-            listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">No active vehicles in queue.</p>';
+        document.getElementById('countAll').textContent = counts.all;
+        document.getElementById('countWaiting').textContent = counts.waiting;
+        document.getElementById('countWashing').textContent = counts.washing;
+        document.getElementById('countDrying').textContent = counts.drying;
+        document.getElementById('countCompleted').textContent = counts.completed;
+        document.getElementById('countDelivered').textContent = counts.delivered;
+    }
+
+    function render() {
+        const filtered = allJobs
+            .filter(job => matchesFilter(job, currentFilter))
+            .filter(job => matchesSearch(job, currentSearch));
+
+        if (filtered.length === 0) {
+            listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">No vehicles match.</p>';
             return;
         }
 
-        listContainer.innerHTML = jobs.map(job => {
+        listContainer.innerHTML = filtered.map(job => {
             const checkInTime = job.created_at
                 ? new Date(job.created_at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
                 : '';
@@ -76,6 +110,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    async function loadJobs() {
+        listContainer.innerHTML = '<p style="color: #9ca3af; text-align: center; margin-top: 40px; font-size: 14px;">Loading...</p>';
+        allJobs = window.db ? await window.db.getJobs() : [];
+        updateCounts();
+        render();
+    }
+
     async function handleAdvance(e) {
         const btn = e.currentTarget;
         const jobId = btn.dataset.jobId;
@@ -95,4 +136,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         await loadJobs();
     }
+
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value.trim();
+        render();
+    });
+
+    filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            filterPills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            currentFilter = pill.dataset.filter;
+            render();
+        });
+    });
+
+    await loadJobs();
 });

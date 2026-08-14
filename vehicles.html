@@ -20,6 +20,21 @@
             </a>
         </div>
 
+        <div class="filter-bar">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search plate, name...">
+            </div>
+            <div class="filter-pills">
+                <button class="filter-pill active" data-filter="all">All (<span id="countAll">0</span>)</button>
+                <button class="filter-pill" data-filter="waiting">Waiting (<span id="countWaiting">0</span>)</button>
+                <button class="filter-pill" data-filter="washing">Washing (<span id="countWashing">0</span>)</button>
+                <button class="filter-pill" data-filter="drying">Drying (<span id="countDrying">0</span>)</button>
+                <button class="filter-pill" data-filter="completed">Completed (<span id="countCompleted">0</span>)</button>
+                <button class="filter-pill" data-filter="delivered">Delivered (<span id="countDelivered">0</span>)</button>
+            </div>
+        </div>
+
         <div id="vehicleList" class="fade-up"></div>
 
         <nav class="bottom-nav">
