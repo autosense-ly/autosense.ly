@@ -3,32 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Expenses - CarWash Pro</title>
+    <title>Inventory - CarWash Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="expenses.css">
+    <link rel="stylesheet" href="inventory.css">
 </head>
 <body>
     <div class="page-container">
         <div class="page-header">
             <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-            <h2 class="page-title">Expenses</h2>
+            <div>
+                <h2 class="page-title">Inventory</h2>
+                <span class="page-subtitle" id="itemCount">0 items</span>
+            </div>
+            <button id="addExpenseBtn" class="add-car-btn" style="border:none; cursor:pointer;">
+                <i class="fa-solid fa-plus"></i> Add Item
+            </button>
         </div>
-
-        <button id="addExpenseBtn" class="primary-btn" style="margin-bottom: 16px;">
-            <i class="fa-solid fa-plus"></i> Add Expense
-        </button>
 
         <div id="expenseForm" class="expense-form-card" style="display: none;">
             <div class="input-group">
-                <label class="input-label">Expense Name</label>
+                <label class="input-label">Item Name</label>
                 <input type="text" id="expName" class="input-field" placeholder="e.g. Soap Supplies" required>
             </div>
 
             <div class="input-group">
-                <label class="input-label">Amount (LYD)</label>
+                <label class="input-label">Category</label>
+                <input type="text" id="expCategory" class="input-field" placeholder="e.g. Cleaning Supply">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Unit</label>
+                <input type="text" id="expUnit" class="input-field" placeholder="e.g. Liter, Box, Piece">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Quantity</label>
+                <input type="number" id="expQuantity" class="input-field" placeholder="e.g. 10" step="1" value="1">
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">Price (LYD)</label>
                 <input type="number" id="expAmount" class="input-field" placeholder="e.g. 150" step="0.01" required>
             </div>
 
@@ -43,17 +60,32 @@
             </div>
 
             <button id="saveExpenseBtn" class="primary-btn">
-                <i class="fa-solid fa-check"></i> Save Expense
+                <i class="fa-solid fa-check"></i> Save Item
             </button>
         </div>
 
         <div id="expenseTotal" class="expense-total-card"></div>
 
         <div id="expenseList" class="fade-up"></div>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="reports.html" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Reports</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="storage.js"></script>
-    <script src="expenses.js"></script>
+    <script src="inventory.js"></script>
 </body>
 </html>

@@ -149,6 +149,18 @@ window.db = {
         return data;
     },
 
+    async updateExpense(id, updates) {
+        const { data, error } = await _client.from('expenses').update(updates).eq('id', id).select().single();
+        if (error) { console.error('updateExpense error:', error); return null; }
+        return data;
+    },
+
+    async deleteExpense(id) {
+        const { error } = await _client.from('expenses').delete().eq('id', id);
+        if (error) { console.error('deleteExpense error:', error); return false; }
+        return true;
+    },
+
     // ============================================
     // PAYMENTS
     // ============================================

@@ -1,0 +1,166 @@
+@import url('./global.css');
+@import url('./components.css');
+@import url('./animations.css');
+
+.page-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary) !important;
+  font-weight: 600;
+  display: block;
+  margin-top: 2px;
+}
+
+.add-car-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-blue);
+  color: #FFFFFF !important;
+  border: none;
+  border-radius: 20px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.add-car-btn:active {
+  background: var(--secondary-blue);
+  transform: scale(0.96);
+}
+
+.expense-form-card {
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-lux);
+}
+
+.expense-total-card {
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-danger) !important;
+  text-align: center;
+}
+
+.expense-card {
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-lux);
+}
+
+.item-icon-badge {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--glass-card-hover, #F0F2FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.expense-name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-white) !important;
+  letter-spacing: -0.3px;
+}
+
+.expense-info {
+  font-size: 12px;
+  color: var(--text-secondary) !important;
+  margin-top: 2px;
+}
+
+.item-middle {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.qty-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-card-hover, #F0F2FF);
+  color: var(--text-white) !important;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.qty-btn:active {
+  background: var(--glass-border);
+}
+
+.qty-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-white) !important;
+  min-width: 18px;
+  text-align: center;
+}
+
+.expense-amount {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-white) !important;
+  white-space: nowrap;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-edit-btn, .item-delete-btn {
+  border: none;
+  background: none;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.item-edit-btn {
+  color: var(--text-secondary);
+}
+
+.item-delete-btn {
+  color: var(--color-danger);
+}
