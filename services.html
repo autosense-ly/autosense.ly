@@ -21,6 +21,12 @@
             <i class="fa-solid fa-plus"></i> Add Service
         </button>
 
+        <div class="filter-pills" style="margin-bottom: 16px;">
+            <button class="filter-pill active" data-filter="all">All (<span id="countAll">0</span>)</button>
+            <button class="filter-pill" data-filter="active">Active (<span id="countActive">0</span>)</button>
+            <button class="filter-pill" data-filter="disabled">Disabled (<span id="countDisabled">0</span>)</button>
+        </div>
+
         <div id="serviceForm" class="service-form-card" style="display: none;">
             <div class="input-group">
                 <label class="input-label">Service Name</label>

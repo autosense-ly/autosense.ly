@@ -31,9 +31,26 @@
 }
 
 .service-status {
-  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.service-status.status-active {
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--color-green) !important;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+}
+
+.service-status.status-disabled {
+  background: rgba(107, 114, 128, 0.12);
   color: var(--text-secondary) !important;
-  margin-top: 4px;
+  border: 1px solid rgba(107, 114, 128, 0.25);
 }
 
 .service-price {
@@ -51,5 +68,31 @@
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 6px;
+  margin-top: 8px;
+  display: block;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 20px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.filter-pill.active {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: #FFFFFF;
 }
