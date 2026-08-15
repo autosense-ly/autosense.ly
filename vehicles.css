@@ -170,3 +170,45 @@
   border-color: var(--primary-blue);
   color: #FFFFFF;
 }
+
+.paid-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-green);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pay-control {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.payment-method-select {
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  background: var(--glass-card-hover, #F0F2FF);
+  color: var(--text-white);
+}
+
+.mark-paid-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-green);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.mark-paid-btn:active {
+  opacity: 0.85;
+}

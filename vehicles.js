@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    function isPaid(job) {
+        const payments = job.payments || [];
+        return payments.some(p => p.paid === true);
+    }
+
     function matchesFilter(job, filter) {
         const status = (job.status || '').toLowerCase();
         if (filter === 'all') return true;
@@ -90,6 +95,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ? `<button class="status-advance-btn" data-job-id="${job.id}" data-next-status="${upcoming}">Mark as ${upcoming}</button>`
                 : '';
 
+            const paid = isPaid(job);
+            const paymentControl = paid
+                ? `<span class="paid-badge"><i class="fa-solid fa-circle-check"></i> Paid</span>`
+                : `<div class="pay-control">
+                     <select class="payment-method-select" id="method-${job.id}">
+                        <option value="cash">Cash</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                     </select>
+                     <button class="mark-paid-btn" data-job-id="${job.id}" data-amount="${job.total_price}">
+                        Mark as Paid — ${Number(job.total_price).toFixed(2)} LYD
+                     </button>
+                   </div>`;
+
             return `
                 <div class="vehicle-card" style="flex-direction: column; align-items: stretch; gap: 10px;">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -101,12 +119,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <span class="${badgeClassFor(job.status)}">${escapeHTML(job.status) || 'waiting'}</span>
                     </div>
                     ${advanceButton}
+                    ${paymentControl}
                 </div>
             `;
         }).join('');
 
         document.querySelectorAll('.status-advance-btn').forEach(btn => {
             btn.addEventListener('click', handleAdvance);
+        });
+
+        document.querySelectorAll('.mark-paid-btn').forEach(btn => {
+            btn.addEventListener('click', handleMarkPaid);
         });
     }
 
@@ -131,6 +154,34 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Something went wrong updating the status. Please try again.');
             btn.disabled = false;
             btn.textContent = `Mark as ${newStatus}`;
+            return;
+        }
+
+        await loadJobs();
+    }
+
+    async function handleMarkPaid(e) {
+        const btn = e.currentTarget;
+        const jobId = btn.dataset.jobId;
+        const amount = btn.dataset.amount;
+        const methodSelect = document.getElementById(`method-${jobId}`);
+        const method = methodSelect.value;
+
+        btn.disabled = true;
+        btn.textContent = 'Processing...';
+
+        const result = await window.db.addPayment({
+            job_id: jobId,
+            amount: Number(amount),
+            method: method,
+            paid: true,
+            paid_at: new Date().toISOString()
+        });
+
+        if (!result) {
+            alert('Something went wrong recording the payment. Please try again.');
+            btn.disabled = false;
+            btn.textContent = `Mark as Paid — ${Number(amount).toFixed(2)} LYD`;
             return;
         }
 
