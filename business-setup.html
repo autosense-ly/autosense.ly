@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Set Up Your Business - CarWash Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="login-content fade-up">
+            <div class="login-brand">
+                <div class="login-brand-icon">
+                    <i class="fa-solid fa-car-wash"></i>
+                </div>
+                <span style="font-weight: 800; font-size: 16px; letter-spacing: -0.3px;">CarWash Pro</span>
+            </div>
+
+            <div class="login-header">
+                <h2>Set Up Your Business</h2>
+                <p>Tell us about your car wash station</p>
+            </div>
+
+            <form id="businessSetupForm" class="glass-card-form">
+                <div class="input-group">
+                    <label class="input-label">Business Name</label>
+                    <input type="text" id="bizName" class="input-field-lux" placeholder="e.g. Ahmed's Car Wash" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Currency</label>
+                    <select id="bizCurrency" class="input-field-lux">
+                        <option value="LYD">LYD (Libyan Dinar)</option>
+                        <option value="USD">USD (US Dollar)</option>
+                        <option value="EUR">EUR (Euro)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="login-btn" id="setupSubmitBtn">Create Business</button>
+            </form>
+        </div>
+
+        <div id="businessIdCard" class="glass-card-form" style="display: none; margin-top: 16px;">
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">
+                Your business is ready! Share this Business ID with your managers so they can join:
+            </p>
+            <div class="business-id-display" id="businessIdDisplay"></div>
+            <button type="button" class="login-btn" id="continueBtn" style="margin-top: 16px;">Continue to Dashboard</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="storage.js"></script>
+    <script src="business-setup.js"></script>
+</body>
+</html>

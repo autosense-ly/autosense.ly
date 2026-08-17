@@ -33,6 +33,55 @@ window.db = {
         return { success: true, user: data.user, profile };
     },
 
+    async signUp(email, password) {
+        const { data, error } = await _client.auth.signUp({ email, password });
+        if (error) {
+            return { success: false, error: error.message };
+        }
+        return { success: true, user: data.user };
+    },
+
+    async createOwnerBusiness({ businessName, currency, ownerName, ownerEmail }) {
+        const { data, error } = await _client.rpc('create_owner_profile', {
+            business_name: businessName,
+            business_currency: currency,
+            owner_name: ownerName,
+            owner_email: ownerEmail
+        });
+
+        if (error || !data) {
+            console.error('createOwnerBusiness error:', error);
+            return { error: error ? error.message : 'Unknown error creating business' };
+        }
+
+        return { business: data };
+    },
+
+    async lookupBusiness(businessId) {
+        const { data, error } = await _client
+            .from('businesses')
+            .select('id, name, currency')
+            .eq('id', businessId)
+            .single();
+        if (error) { return null; }
+        return data;
+    },
+
+    async createManagerProfile({ businessId, name, email }) {
+        const { data, error } = await _client.rpc('join_business_as_manager', {
+            target_business_id: businessId,
+            manager_name: name,
+            manager_email: email
+        });
+
+        if (error || !data) {
+            console.error('createManagerProfile error:', error);
+            return { error: error ? error.message : 'Unknown error joining business' };
+        }
+
+        return { profile: data };
+    },
+
     async signOut() {
         await _client.auth.signOut();
     },
