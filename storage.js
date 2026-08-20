@@ -112,6 +112,61 @@ window.db = {
     },
 
     // ============================================
+    // PERMISSIONS
+    // ============================================
+    async getMyPermissions() {
+        const profile = await this.getCurrentProfile();
+        if (!profile) return null;
+
+        const ALL_TRUE = {
+            dashboard: true, reports: true, expenses: true, employees: true,
+            services: true, payments: true, checkin: true, live_operations: true, settings: true
+        };
+
+        if (profile.role === 'owner') {
+            return { role: 'owner', ...ALL_TRUE };
+        }
+
+        const { data, error } = await _client
+            .from('manager_permissions')
+            .select('*')
+            .eq('user_id', profile.id)
+            .single();
+
+        if (error || !data) {
+            console.error('getMyPermissions error:', error);
+            const ALL_FALSE = {
+                dashboard: false, reports: false, expenses: false, employees: false,
+                services: false, payments: false, checkin: false, live_operations: false, settings: false
+            };
+            return { role: 'manager', ...ALL_FALSE };
+        }
+
+        return { role: 'manager', ...data };
+    },
+
+    async getManagersForBusiness(businessId) {
+        const { data, error } = await _client
+            .from('app_users')
+            .select('*, manager_permissions(*)')
+            .eq('business_id', businessId)
+            .eq('role', 'manager');
+        if (error) { console.error('getManagersForBusiness error:', error); return []; }
+        return data;
+    },
+
+    async updateManagerPermissions(userId, updates) {
+        const { data, error } = await _client
+            .from('manager_permissions')
+            .update(updates)
+            .eq('user_id', userId)
+            .select()
+            .single();
+        if (error) { console.error('updateManagerPermissions error:', error); return null; }
+        return data;
+    },
+
+    // ============================================
     // JOBS (replaces the old flat "vehicles" list)
     // ============================================
     async getJobs() {
@@ -131,8 +186,6 @@ window.db = {
     },
 
     async updateJob(id, updates) {
-        // Stamp completed_at the moment a job first becomes "completed".
-        // Later moving to "delivered" won't overwrite the original completion time.
         if (updates.status === 'completed' && !updates.completed_at) {
             updates = { ...updates, completed_at: new Date().toISOString() };
         }
@@ -229,7 +282,6 @@ window.db = {
         const startOfToday = new Date();
         startOfToday.setHours(0, 0, 0, 0);
 
-        // All jobs for this business
         const { data: jobs, error: jobsError } = await _client
             .from('jobs')
             .select('id, status, created_at, completed_at')
@@ -240,14 +292,12 @@ window.db = {
 
         const doneStatuses = ['completed', 'delivered'];
 
-        // "Washed today" = actually finished today, not checked in today
         const carsWashedToday = allJobs.filter(j =>
             doneStatuses.includes(j.status) && j.completed_at && new Date(j.completed_at) >= startOfToday
         ).length;
 
         const pending = allJobs.filter(j => !doneStatuses.includes(j.status)).length;
 
-        // Today's paid payments for this business's jobs
         const jobIds = allJobs.map(j => j.id);
         let revenue = 0;
         if (jobIds.length > 0) {
@@ -266,7 +316,6 @@ window.db = {
 
         const avgIncome = carsWashedToday > 0 ? revenue / carsWashedToday : 0;
 
-        // Employee count (owner only — RLS enforces this automatically)
         const { data: employees, error: empError } = await _client
             .from('employees')
             .select('id')
@@ -301,13 +350,11 @@ window.db = {
         const allJobs = jobs || [];
 
         const doneStatuses = ['completed', 'delivered'];
-        // "Washed this month" = actually finished this month, not checked in this month
         const monthJobs = allJobs.filter(j =>
             doneStatuses.includes(j.status) && j.completed_at && new Date(j.completed_at) >= startOfMonth
         );
         const totalWashes = monthJobs.length;
 
-        // Revenue: payments actually collected this month (by paid_at, not job creation date)
         const jobIds = allJobs.map(j => j.id);
         let revenue = 0;
         if (jobIds.length > 0) {
@@ -321,7 +368,6 @@ window.db = {
             revenue = monthPayments.reduce((sum, p) => sum + Number(p.amount), 0);
         }
 
-        // Expenses this month (timezone-safe date parsing)
         const { data: expenses, error: expensesError } = await _client
             .from('expenses')
             .select('amount, expense_date')
@@ -332,7 +378,6 @@ window.db = {
             return new Date(y, m - 1, d) >= startOfMonth;
         }).reduce((sum, e) => sum + Number(e.amount), 0);
 
-        // Employee payments this month (salary employees estimated monthly, percentage employees from their completed jobs)
         const { data: employees, error: empError } = await _client
             .from('employees')
             .select('id, pay_type, salary_amount, salary_frequency, percentage_rate')

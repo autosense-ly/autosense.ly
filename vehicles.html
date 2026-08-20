@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="vehicles.css">
 </head>
-<body>
+<body data-module="live_operations">
     <div class="page-container">
         <div class="page-header">
             <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
             <h2 class="page-title">Vehicles Queue</h2>
-            <a href="checkin.html" class="add-car-btn">
+            <a href="checkin.html" class="add-car-btn" data-nav-module="checkin">
                 <i class="fa-solid fa-plus"></i> Add Car
             </a>
         </div>
@@ -42,11 +42,11 @@
                 <i class="fa-solid fa-house"></i>
                 <span>Home</span>
             </a>
-            <a href="reports.html" class="nav-item">
+            <a href="reports.html" class="nav-item" data-nav-module="reports">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>Reports</span>
             </a>
-            <a href="settings.html" class="nav-item">
+            <a href="settings.html" class="nav-item" data-nav-module="settings">
                 <i class="fa-solid fa-gear"></i>
                 <span>Settings</span>
             </a>
@@ -55,6 +55,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="storage.js"></script>
+    <script src="permissions-guard.js"></script>
     <script src="vehicles.js"></script>
 </body>
 </html>

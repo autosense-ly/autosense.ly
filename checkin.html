@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="checkin.css">
 </head>
-<body>
+<body data-module="checkin">
     <div class="page-container">
         <div class="page-header">
             <a href="vehicles.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
@@ -57,11 +57,11 @@
                 <i class="fa-solid fa-house"></i>
                 <span>Home</span>
             </a>
-            <a href="reports.html" class="nav-item">
+            <a href="reports.html" class="nav-item" data-nav-module="reports">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>Reports</span>
             </a>
-            <a href="settings.html" class="nav-item">
+            <a href="settings.html" class="nav-item" data-nav-module="settings">
                 <i class="fa-solid fa-gear"></i>
                 <span>Settings</span>
             </a>
@@ -69,6 +69,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="storage.js"></script>
+    <script src="permissions-guard.js"></script>
     <script src="checkin.js"></script>
 </body>
 </html>
